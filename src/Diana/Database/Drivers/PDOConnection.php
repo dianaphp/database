@@ -9,7 +9,7 @@ class PDOConnection implements Connection
 {
     protected ?PDO $pdo;
 
-    public function __construct(private array $data)
+    public function __construct(private readonly array $data)
     {
         // TODO: check if the password should be removed or at least hidden or something, maybe via shadow class that automatically hides the value so it cannot be displayed
         $this->pdo = new PDO($data['dsn'], $data['username'], $data['password']);

@@ -3,5 +3,5 @@
 namespace Diana\Database;
 
 interface IDatabase {
-    public function query(string $query):
+    public function query(string $query);
 }
