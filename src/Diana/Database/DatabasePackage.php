@@ -2,12 +2,11 @@
 
 namespace Diana\Database;
 
-use Diana\Config\Attributes\Config;
 use Diana\Database\Contracts\Connection;
 use Diana\Database\Exceptions\InvalidDriverException;
+use Diana\Runtime\Attributes\Config;
 use Diana\Runtime\Kernel;
 use Diana\Runtime\Package;
-use Illuminate\Container\Container;
 
 class DatabasePackage extends Package
 {
@@ -22,7 +21,9 @@ class DatabasePackage extends Package
         // $kernel->runCommand("cache-clear");
         foreach ($this->config as $name => $data) {
             if (!is_a($data['driver'], Connection::class, true)) {
-                throw new InvalidDriverException("Attempted to register a connection [{$name}] using the driver [{$data['driver']}] which does not implement [" . Connection::class . "].");
+                throw new InvalidDriverException(
+                    "Attempted to register a connection [{$name}] using the driver [{$data['driver']}] which does not implement [" . Connection::class . "]."
+                );
             }
 
             $this->connections[$name] = new $data['driver']($data);
