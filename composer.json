@@ -33,7 +33,9 @@
     ],
     "require": {
         "php": ">=8.0",
-        "dianaphp/lib": "dev-main"
+        "dianaphp/lib": "dev-main",
+        "dianaphp/framework": "dev-main",
+        "ext-pdo": "*"
     },
     "require-dev": {
         "phpunit/phpunit": "*"

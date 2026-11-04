@@ -4,22 +4,16 @@ namespace Diana\Database;
 
 use Diana\Database\Contracts\Connection;
 use Diana\Database\Exceptions\InvalidDriverException;
-use Diana\Runtime\Attributes\Config;
-use Diana\Runtime\Kernel;
-use Diana\Runtime\Package;
+use Diana\Config\Config;
+use InvalidArgumentException;
 
-class DatabasePackage extends Package
+class DatabasePackage
 {
     protected array $connections = [];
 
-    public function __construct(#[Config('database')] protected array $config)
+    public function __construct(#[Config('database')] Config $config)
     {
-    }
-
-    public function init(Kernel $kernel)
-    {
-        // $kernel->runCommand("cache-clear");
-        foreach ($this->config as $name => $data) {
+        foreach ($config->all() as $name => $data) {
             if (!is_a($data['driver'], Connection::class, true)) {
                 throw new InvalidDriverException(
                     "Attempted to register a connection [{$name}] using the driver [{$data['driver']}] which does not implement [" . Connection::class . "]."
@@ -32,6 +26,7 @@ class DatabasePackage extends Package
 
     public function getConnection(string $name = 'default'): Connection
     {
-        return $this->connections[$name];
+        return $this->connections[$name]
+            ?? throw new InvalidArgumentException("Unknown database connection [{$name}].");
     }
 }
