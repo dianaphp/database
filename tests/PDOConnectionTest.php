@@ -41,6 +41,7 @@ class PDOConnectionTest extends TestCase
             self::markTestSkipped('pdo_sqlite is required for the SQL round-trip test.');
         }
         $connection = new PDOConnection(['dsn' => 'sqlite::memory:']);
+        self::assertInstanceOf(\Pdo\Sqlite::class, (new ReflectionProperty(PDOConnection::class, 'pdo'))->getValue($connection));
         $connection->write('CREATE TABLE users (id INTEGER PRIMARY KEY, name TEXT)');
         $connection->write('INSERT INTO users (id, name) VALUES (:id, :name)', ['id' => 7, 'name' => "Diana's test"]);
         self::assertSame([['name' => "Diana's test"]], $connection->read('SELECT name FROM users WHERE id = :id', ['id' => 7]));

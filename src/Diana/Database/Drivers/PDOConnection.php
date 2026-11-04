@@ -11,7 +11,7 @@ class PDOConnection implements Connection
 
     public function __construct(#[\SensitiveParameter] array $data)
     {
-        $this->pdo = new PDO(
+        $this->pdo = PDO::connect(
             $data['dsn'],
             $data['username'] ?? null,
             $data['password'] ?? null,
