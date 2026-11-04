@@ -15,15 +15,7 @@
         }
     },
     "scripts": {
-        "post-install-cmd": [
-            "phpunit"
-        ],
-        "post-update-cmd": [
-            "phpunit"
-        ],
-        "test": [
-            "phpunit"
-        ]
+        "test": "phpunit"
     },
     "authors": [
         {
@@ -38,6 +30,6 @@
         "ext-pdo": "*"
     },
     "require-dev": {
-        "phpunit/phpunit": "*"
+        "phpunit/phpunit": "^11.5"
     }
 }
